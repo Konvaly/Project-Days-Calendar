@@ -2,11 +2,59 @@
 <html>
 
 <head>
-    <script type="module" src="common.mjs"></script>
-    <script type="module" src="web.mjs"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Days Calendar</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+
+    <main class="calendar-container" aria-labelledby="calendar-heading">
+
+        <!-- Header -->
+        <header class="calendar-header">
+
+            <nav class="calendar-navigation" aria-label="Calendar navigation">
+
+                <button id="prev-month" type="button" class="nav-btn" aria-label="Go to previous month">
+                    &lt;
+                </button>
+
+                <button id="current-month" type="button" class="nav-btn current-month-btn" aria-haspopup="dialog"
+                    aria-label="Select month and year">
+                    January 2026
+                </button>
+
+                <button id="next-month" type="button" class="nav-btn" aria-label="Go to next month">
+                    &gt;
+                </button>
+
+            </nav>
+
+        </header>
+
+        <!-- Calendar Grid -->
+        <section id="calendar-grid" class="calendar-grid" aria-label="Calendar days">
+
+            <!-- Weekday Headers -->
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
+
+            <!-- Example Static Layout (JS will replace this) -->
+
+        </section>
+
+    </main>
+
+    <script type="module" src="common.mjs"></script>
+    <script type="module" src="web.mjs"></script>
 </body>
+
 
 </html>
