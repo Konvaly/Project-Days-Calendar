@@ -87,3 +87,41 @@ export function findLastWeekdayOfMonth(year, monthIndex, weekdayIndex) {
 
   return date.getDate();
 }
+
+export function calculateRecurringDay(year, dayDefinition) {
+  const { monthName, dayName, occurrence } = dayDefinition;
+
+  const monthIndex = monthNameToIndex(monthName);
+  const weekdayIndex = dayNameToIndex(dayName);
+
+  let dayOfMonth;
+
+  if (occurrence === "last") {
+    dayOfMonth = findLastWeekdayOfMonth(year, monthIndex, weekdayIndex);
+  } else {
+    const occurrenceMap = {
+      first: 1,
+      second: 2,
+      third: 3,
+      fourth: 4,
+    };
+
+    const occurrenceIndex = occurrenceMap[occurrence];
+
+    if (!occurrenceIndex) {
+      throw new Error(`Unknown occurrence: "${occurrence}"`);
+    }
+
+    dayOfMonth = findNthWeekdayOfMonth(
+      year,
+      monthIndex,
+      weekdayIndex,
+      occurrenceIndex,
+    );
+  }
+
+  const month = String(monthIndex + 1).padStart(2, "0");
+  const day = String(dayOfMonth).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}

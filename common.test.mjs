@@ -5,7 +5,9 @@ import {
   findFirstWeekdayOfMonth,
   findNthWeekdayOfMonth,
   findLastWeekdayOfMonth,
+  calculateRecurringDay,
 } from "./common.mjs";
+import daysData from "./days.json" with { type: "json" };
 import assert from "node:assert";
 import test from "node:test";
 
@@ -50,4 +52,13 @@ test("find last weekday of month", () => {
 
   // October 2020 last Friday = Oct 30
   assert.equal(findLastWeekdayOfMonth(2020, 9, 5), 30);
+});
+
+test("calculate Ada Lovelace Day correctly", () => {
+  assert.equal(calculateRecurringDay(2024, daysData[0]), "2024-10-08");
+  assert.equal(calculateRecurringDay(2025, daysData[0]), "2025-10-14");
+});
+
+test("calculate World Lemur Day correctly", () => {
+  assert.equal(calculateRecurringDay(2024, daysData[4]), "2024-10-25");
 });
