@@ -106,12 +106,27 @@ function createMonthDaysUi() {
     if (isEmpty) {
       cell.classList.add("empty");
     } else {
-      cell.textContent = content;
+      // Create container for day number
+      const dayNumber = document.createElement("div");
+      dayNumber.classList.add("day-number");
+      dayNumber.textContent = content;
+      cell.appendChild(dayNumber);
 
-      // Minimal “use”: mark days that have commemorative events
       if (eventNames.length > 0) {
         cell.classList.add("has-event");
         cell.title = eventNames.join(", ");
+
+        // Create visible event label container
+        const eventsContainer = document.createElement("div");
+        eventsContainer.classList.add("day-events");
+
+        for (const name of eventNames) {
+          const eventLabel = document.createElement("div");
+          eventLabel.textContent = name;
+          eventsContainer.appendChild(eventLabel);
+        }
+
+        cell.appendChild(eventsContainer);
       }
     }
 

@@ -102,3 +102,15 @@ body {
 .day-cell.has-event {
   outline: 2px dashed #f59e0b;
 }
+
+.day-number {
+  font-weight: bold;
+  align-self: flex-end;
+}
+
+.day-events {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  text-align: left;
+  width: 100%;
+}
