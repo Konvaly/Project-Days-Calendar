@@ -44,3 +44,15 @@ export function dayNameToIndex(dayName) {
   }
   return index;
 }
+
+export function findFirstWeekdayOfMonth(year, monthIndex, weekdayIndex) {
+  // Start at the first day of the month
+  const date = new Date(year, monthIndex, 1);
+
+  // Move forward until weekday matches
+  while (date.getDay() !== weekdayIndex) {
+    date.setDate(date.getDate() + 1);
+  }
+
+  return date.getDate();
+}

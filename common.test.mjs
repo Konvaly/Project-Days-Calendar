@@ -1,4 +1,9 @@
-import { getGreeting, monthNameToIndex, dayNameToIndex } from "./common.mjs";
+import {
+  getGreeting,
+  monthNameToIndex,
+  dayNameToIndex,
+  findFirstWeekdayOfMonth,
+} from "./common.mjs";
 import assert from "node:assert";
 import test from "node:test";
 
@@ -22,4 +27,12 @@ test("monthNameToIndex throws for unknown month", () => {
 
 test("dayNameToIndex throws for unknown day", () => {
   assert.throws(() => dayNameToIndex("Thorsday"), /Unknown dayName/);
+});
+
+test("find first weekday in month", () => {
+  // October 2024 first Tuesday is Oct 1
+  assert.equal(findFirstWeekdayOfMonth(2024, 9, 2), 1);
+
+  // September 2024 first Saturday is Sep 7
+  assert.equal(findFirstWeekdayOfMonth(2024, 8, 6), 7);
 });
