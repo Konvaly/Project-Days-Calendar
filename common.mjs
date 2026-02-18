@@ -75,3 +75,15 @@ export function findNthWeekdayOfMonth(
 
   return dayOfMonth;
 }
+
+export function findLastWeekdayOfMonth(year, monthIndex, weekdayIndex) {
+  // Start at last day of the month
+  const date = new Date(year, monthIndex + 1, 0);
+
+  // Move backwards until weekday matches
+  while (date.getDay() !== weekdayIndex) {
+    date.setDate(date.getDate() - 1);
+  }
+
+  return date.getDate();
+}

@@ -4,6 +4,7 @@ import {
   dayNameToIndex,
   findFirstWeekdayOfMonth,
   findNthWeekdayOfMonth,
+  findLastWeekdayOfMonth,
 } from "./common.mjs";
 import assert from "node:assert";
 import test from "node:test";
@@ -41,4 +42,12 @@ test("find first weekday in month", () => {
 test("find nth weekday of month", () => {
   assert.equal(findNthWeekdayOfMonth(2024, 9, 2, 2), 8);
   assert.equal(findNthWeekdayOfMonth(2025, 9, 2, 2), 14);
+});
+
+test("find last weekday of month", () => {
+  // October 2024 last Friday = Oct 25
+  assert.equal(findLastWeekdayOfMonth(2024, 9, 5), 25);
+
+  // October 2020 last Friday = Oct 30
+  assert.equal(findLastWeekdayOfMonth(2020, 9, 5), 30);
 });
