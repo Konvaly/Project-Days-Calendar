@@ -5,15 +5,33 @@ import fs from "node:fs";
 import { calculateRecurringDay } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
-// Create minimal ICS calendar skeleton
-const icsContent = [
+const exampleYear = 2024;
+
+// Build ICS lines incrementally
+const icsLines = [
   "BEGIN:VCALENDAR",
   "VERSION:2.0",
   "PRODID:-//Days Calendar Project//EN",
-  "END:VCALENDAR",
-].join("\n");
+];
 
-// Write to file
-fs.writeFileSync("days.ics", icsContent);
+// Generate one event per commemorative day
+for (const dayDef of daysData) {
+  const isoDate = calculateRecurringDay(exampleYear, dayDef);
 
-console.log("days.ics file created");
+  const compactDate = isoDate.replaceAll("-", "");
+
+  icsLines.push(
+    "BEGIN:VEVENT",
+    `DTSTART;VALUE=DATE:${compactDate}`,
+    `DTEND;VALUE=DATE:${compactDate}`,
+    `SUMMARY:${dayDef.name}`,
+    "END:VEVENT",
+  );
+}
+
+icsLines.push("END:VCALENDAR");
+
+// Write file
+fs.writeFileSync("days.ics", icsLines.join("\n"));
+
+console.log("days.ics file with events created");
