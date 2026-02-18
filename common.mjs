@@ -56,3 +56,22 @@ export function findFirstWeekdayOfMonth(year, monthIndex, weekdayIndex) {
 
   return date.getDate();
 }
+
+export function findNthWeekdayOfMonth(
+  year,
+  monthIndex,
+  weekdayIndex,
+  occurrenceIndex,
+) {
+  const firstDay = findFirstWeekdayOfMonth(year, monthIndex, weekdayIndex);
+
+  const dayOfMonth = firstDay + (occurrenceIndex - 1) * 7;
+
+  const lastDayOfMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+  if (dayOfMonth > lastDayOfMonth) {
+    throw new Error("Invalid occurrence for this month");
+  }
+
+  return dayOfMonth;
+}

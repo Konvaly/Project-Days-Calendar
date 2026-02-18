@@ -3,6 +3,7 @@ import {
   monthNameToIndex,
   dayNameToIndex,
   findFirstWeekdayOfMonth,
+  findNthWeekdayOfMonth,
 } from "./common.mjs";
 import assert from "node:assert";
 import test from "node:test";
@@ -35,4 +36,9 @@ test("find first weekday in month", () => {
 
   // September 2024 first Saturday is Sep 7
   assert.equal(findFirstWeekdayOfMonth(2024, 8, 6), 7);
+});
+
+test("find nth weekday of month", () => {
+  assert.equal(findNthWeekdayOfMonth(2024, 9, 2, 2), 8);
+  assert.equal(findNthWeekdayOfMonth(2025, 9, 2, 2), 14);
 });
