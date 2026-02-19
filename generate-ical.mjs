@@ -23,6 +23,7 @@ for (let year = startYear; year <= endYear; year++) {
 
     icsLines.push(
       "BEGIN:VEVENT",
+      `UID:${dayDef.name}-${year}@days-calendar`,
       `DTSTART;VALUE=DATE:${compactDate}`,
       `DTEND;VALUE=DATE:${compactDate}`,
       `SUMMARY:${dayDef.name}`,
