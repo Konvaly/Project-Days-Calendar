@@ -9,6 +9,7 @@ function createMonthDaysUi() {
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
   const monthBtn = document.getElementById("current-month");
+  const descriptionPanel = document.getElementById("event-description");
 
   function buildEventsByDay(year, monthIndex) {
     // Convert monthIndex (0-11) to the same month name format used in days.json, e.g. "October"
@@ -115,6 +116,11 @@ function createMonthDaysUi() {
       if (eventNames.length > 0) {
         cell.classList.add("has-event");
         cell.title = eventNames.join(", ");
+        cell.style.cursor = "pointer";
+
+        cell.addEventListener("click", () => {
+          descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
+        });
 
         // Create visible event label container
         const eventsContainer = document.createElement("div");
