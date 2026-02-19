@@ -9,6 +9,8 @@ function createMonthDaysUi() {
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
   const monthBtn = document.getElementById("current-month");
+  const monthSelect = document.getElementById("month-select");
+  const yearSelect = document.getElementById("year-select");
 
   function buildEventsByDay(year, monthIndex) {
     // Convert monthIndex (0-11) to the same month name format used in days.json, e.g. "October"
@@ -41,12 +43,57 @@ function createMonthDaysUi() {
     return eventsByDay;
   }
 
+  function populateDropdowns(date) {
+    const currentMonth = date.getMonth();
+    const currentYear = date.getFullYear();
+
+    // Populate months only once
+    if (monthSelect.options.length === 0) {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      monthNames.forEach((name, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = name;
+        monthSelect.appendChild(option);
+      });
+    }
+
+    // Populate years only once
+    if (yearSelect.options.length === 0) {
+      for (let year = 1900; year <= 2100; year++) {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+      }
+    }
+
+    // Sync dropdown selection with calendar
+    monthSelect.value = currentMonth;
+    yearSelect.value = currentYear;
+  }
+
   // Initial render immediately
   renderCalendar(currentDate);
 
   function renderCalendar(date) {
     clearCalendar();
     updateMonthLabel(date);
+    populateDropdowns(date);
     generateDays(date);
   }
 
