@@ -133,6 +133,12 @@ function createMonthDaysUi() {
         }
 
         cell.appendChild(eventsContainer);
+      } else if (!isEmpty) {
+        // If user clicks a normal day, reset description panel
+        cell.addEventListener("click", () => {
+          descriptionPanel.innerHTML =
+            "<p>Select a commemorative day to see details.</p>";
+        });
       }
     }
 
