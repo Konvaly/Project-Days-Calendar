@@ -202,5 +202,23 @@ function createMonthDaysUi() {
     );
     renderCalendar(currentDate);
   });
+
+  monthSelect.addEventListener("change", () => {
+    currentDate = new Date(
+      Number(yearSelect.value),
+      Number(monthSelect.value),
+      1,
+    );
+    renderCalendar(currentDate);
+  });
+
+  yearSelect.addEventListener("change", () => {
+    currentDate = new Date(
+      Number(yearSelect.value),
+      Number(monthSelect.value),
+      1,
+    );
+    renderCalendar(currentDate);
+  });
 }
 createMonthDaysUi();
