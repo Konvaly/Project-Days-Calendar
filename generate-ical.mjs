@@ -5,7 +5,8 @@ import fs from "node:fs";
 import { calculateRecurringDay } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
-const exampleYear = 2024;
+const startYear = 2020;
+const endYear = 2030;
 
 // Build ICS lines incrementally
 const icsLines = [
@@ -15,18 +16,19 @@ const icsLines = [
 ];
 
 // Generate one event per commemorative day
-for (const dayDef of daysData) {
-  const isoDate = calculateRecurringDay(exampleYear, dayDef);
+for (let year = startYear; year <= endYear; year++) {
+  for (const dayDef of daysData) {
+    const isoDate = calculateRecurringDay(year, dayDef);
+    const compactDate = isoDate.replaceAll("-", "");
 
-  const compactDate = isoDate.replaceAll("-", "");
-
-  icsLines.push(
-    "BEGIN:VEVENT",
-    `DTSTART;VALUE=DATE:${compactDate}`,
-    `DTEND;VALUE=DATE:${compactDate}`,
-    `SUMMARY:${dayDef.name}`,
-    "END:VEVENT",
-  );
+    icsLines.push(
+      "BEGIN:VEVENT",
+      `DTSTART;VALUE=DATE:${compactDate}`,
+      `DTEND;VALUE=DATE:${compactDate}`,
+      `SUMMARY:${dayDef.name}`,
+      "END:VEVENT",
+    );
+  }
 }
 
 icsLines.push("END:VCALENDAR");
