@@ -13,7 +13,6 @@
 
     <main class="calendar-container" aria-labelledby="calendar-heading">
 
-        <!-- Header -->
         <header class="calendar-header">
 
             <nav class="calendar-navigation" aria-label="Calendar navigation">
@@ -22,10 +21,9 @@
                     &lt;
                 </button>
 
-                <button id="current-month" type="button" class="nav-btn current-month-btn" aria-haspopup="dialog"
-                    aria-label="Select month and year">
+                <h1 id="calendar-heading" class="current-month-btn">
                     January 2026
-                </button>
+                </h1>
 
                 <button id="next-month" type="button" class="nav-btn" aria-label="Go to next month">
                     &gt;
@@ -45,10 +43,8 @@
 
         </header>
 
-        <!-- Calendar Grid -->
         <section id="calendar-grid" class="calendar-grid" aria-label="Calendar days">
 
-            <!-- Weekday Headers -->
             <div class="day-name">Sun</div>
             <div class="day-name">Mon</div>
             <div class="day-name">Tue</div>
@@ -57,14 +53,11 @@
             <div class="day-name">Fri</div>
             <div class="day-name">Sat</div>
 
-            <!-- Example Static Layout (JS will replace this) -->
-
         </section>
-        <!-- Event description panel -->
+
         <section id="event-description" class="event-description" aria-live="polite">
             <p>Select a commemorative day to see details.</p>
         </section>
-
 
     </main>
 

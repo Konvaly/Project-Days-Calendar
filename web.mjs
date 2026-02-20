@@ -4,35 +4,27 @@ import daysData from "./days.json" with { type: "json" };
 function createMonthDaysUi() {
   let currentDate = new Date();
 
-  // DOM
   const calendarGrid = document.getElementById("calendar-grid");
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
-  const monthBtn = document.getElementById("current-month");
+  const monthHeading = document.getElementById("calendar-heading");
   const monthSelect = document.getElementById("month-select");
   const yearSelect = document.getElementById("year-select");
   const descriptionPanel = document.getElementById("event-description");
 
   function buildEventsByDay(year, monthIndex) {
-    // Convert monthIndex (0-11) to the same month name format used in days.json, e.g. "October"
     const currentMonthName = new Date(year, monthIndex, 1).toLocaleDateString(
       "en-US",
       { month: "long" },
     );
 
-    // eventsByDay will look like: { 8: ["Ada Lovelace Day"], 25: ["World Lemur Day"] }
     const eventsByDay = {};
 
     for (const dayDef of daysData) {
-      // Only handle events that belong to the month we are currently rendering
       if (dayDef.monthName !== currentMonthName) continue;
-
-      // Use shared calculation engine to get the actual calendar date.
-      // It returns an ISO string ("YYYY-MM-DD"), so we can safely extract the day.
 
       const isoDate = calculateRecurringDay(year, dayDef);
 
-      // Extract the "DD" part and convert to a number (e.g. "08" -> 8)
       const dayOfMonth = Number(isoDate.slice(8, 10));
 
       if (!eventsByDay[dayOfMonth]) {
@@ -48,7 +40,6 @@ function createMonthDaysUi() {
     const currentMonth = date.getMonth();
     const currentYear = date.getFullYear();
 
-    // Populate months only once
     if (monthSelect.options.length === 0) {
       const monthNames = [
         "January",
@@ -73,7 +64,6 @@ function createMonthDaysUi() {
       });
     }
 
-    // Populate years only once
     if (yearSelect.options.length === 0) {
       for (let year = 1900; year <= 2100; year++) {
         const option = document.createElement("option");
@@ -83,12 +73,10 @@ function createMonthDaysUi() {
       }
     }
 
-    // Sync dropdown selection with calendar
     monthSelect.value = currentMonth;
     yearSelect.value = currentYear;
   }
 
-  // Initial render immediately
   renderCalendar(currentDate);
 
   function renderCalendar(date) {
@@ -105,7 +93,7 @@ function createMonthDaysUi() {
 
   function updateMonthLabel(date) {
     const options = { month: "long", year: "numeric" };
-    monthBtn.textContent = date.toLocaleDateString("en-US", options);
+    monthHeading.textContent = date.toLocaleDateString("en-US", options);
   }
 
   function generateDays(date) {
@@ -120,8 +108,12 @@ function createMonthDaysUi() {
     const totalDays = lastDayOfMonth.getDate();
     const startingDay = firstDayOfMonth.getDay();
 
-    // Total calendar cells must always be 42 (6 weeks × 7 days)
-    const totalCells = 42;
+    const leadingEmptyCells = startingDay;
+    const daysWithLeading = leadingEmptyCells + totalDays;
+
+    const trailingEmptyCells = (7 - (daysWithLeading % 7)) % 7;
+
+    const totalCells = leadingEmptyCells + totalDays + trailingEmptyCells;
 
     let dayCounter = 1;
 
@@ -154,22 +146,31 @@ function createMonthDaysUi() {
     if (isEmpty) {
       cell.classList.add("empty");
     } else {
-      // Create container for day number
       const dayNumber = document.createElement("div");
       dayNumber.classList.add("day-number");
       dayNumber.textContent = content;
       cell.appendChild(dayNumber);
 
+      cell.setAttribute("tabindex", "0");
+      cell.setAttribute("role", "button");
       if (eventNames.length > 0) {
         cell.classList.add("has-event");
         cell.title = eventNames.join(", ");
         cell.style.cursor = "pointer";
 
-        cell.addEventListener("click", () => {
+        const handleSelection = () => {
           descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
+        };
+
+        cell.addEventListener("click", handleSelection);
+
+        cell.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleSelection();
+          }
         });
 
-        // Create visible event label container
         const eventsContainer = document.createElement("div");
         eventsContainer.classList.add("day-events");
 
@@ -181,7 +182,6 @@ function createMonthDaysUi() {
 
         cell.appendChild(eventsContainer);
       } else if (!isEmpty) {
-        // If user clicks a normal day, reset description panel
         cell.addEventListener("click", () => {
           descriptionPanel.innerHTML =
             "<p>Select a commemorative day to see details.</p>";
@@ -196,7 +196,6 @@ function createMonthDaysUi() {
     calendarGrid.appendChild(cell);
   }
 
-  // Navigation
   prevBtn.addEventListener("click", () => {
     currentDate = new Date(
       currentDate.getFullYear(),
