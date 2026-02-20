@@ -8,7 +8,7 @@ function createMonthDaysUi() {
   const calendarGrid = document.getElementById("calendar-grid");
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
-  const monthBtn = document.getElementById("current-month");
+  const monthHeading = document.getElementById("calendar-heading");
   const monthSelect = document.getElementById("month-select");
   const yearSelect = document.getElementById("year-select");
   const descriptionPanel = document.getElementById("event-description");
@@ -105,7 +105,7 @@ function createMonthDaysUi() {
 
   function updateMonthLabel(date) {
     const options = { month: "long", year: "numeric" };
-    monthBtn.textContent = date.toLocaleDateString("en-US", options);
+    monthHeading.textContent = date.toLocaleDateString("en-US", options);
   }
 
   function generateDays(date) {
