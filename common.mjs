@@ -1,7 +1,3 @@
-export function getGreeting() {
-  return "Hello";
-}
-
 export const MONTH_NAME_TO_INDEX = Object.freeze({
   January: 0,
   February: 1,
