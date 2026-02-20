@@ -120,8 +120,13 @@ function createMonthDaysUi() {
     const totalDays = lastDayOfMonth.getDate();
     const startingDay = firstDayOfMonth.getDay();
 
-    // Total calendar cells must always be 42 (6 weeks × 7 days)
-    const totalCells = 42;
+    const leadingEmptyCells = startingDay;
+    const daysWithLeading = leadingEmptyCells + totalDays;
+
+    // Calculate trailing empty cells to complete the final week
+    const trailingEmptyCells = (7 - (daysWithLeading % 7)) % 7;
+
+    const totalCells = leadingEmptyCells + totalDays + trailingEmptyCells;
 
     let dayCounter = 1;
 
