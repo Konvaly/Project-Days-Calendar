@@ -1,5 +1,4 @@
 import {
-  getGreeting,
   monthNameToIndex,
   dayNameToIndex,
   findFirstWeekdayOfMonth,
@@ -10,10 +9,6 @@ import {
 import daysData from "./days.json" with { type: "json" };
 import assert from "node:assert";
 import test from "node:test";
-
-test("Greeting is correct", () => {
-  assert.equal(getGreeting(), "Hello");
-});
 
 test("monthNameToIndex converts month names correctly", () => {
   assert.equal(monthNameToIndex("September"), 8);
@@ -34,10 +29,7 @@ test("dayNameToIndex throws for unknown day", () => {
 });
 
 test("find first weekday in month", () => {
-  // October 2024 first Tuesday is Oct 1
   assert.equal(findFirstWeekdayOfMonth(2024, 9, 2), 1);
-
-  // September 2024 first Saturday is Sep 7
   assert.equal(findFirstWeekdayOfMonth(2024, 8, 6), 7);
 });
 
@@ -47,10 +39,7 @@ test("find nth weekday of month", () => {
 });
 
 test("find last weekday of month", () => {
-  // October 2024 last Friday = Oct 25
   assert.equal(findLastWeekdayOfMonth(2024, 9, 5), 25);
-
-  // October 2020 last Friday = Oct 30
   assert.equal(findLastWeekdayOfMonth(2020, 9, 5), 30);
 });
 

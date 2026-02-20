@@ -1,5 +1,3 @@
-// This is a placeholder file which shows how you can define functions which can be used from both a browser script and a node script. You can delete the contents of the file once you have understood how it works.
-
 export function getGreeting() {
   return "Hello";
 }
@@ -46,10 +44,8 @@ export function dayNameToIndex(dayName) {
 }
 
 export function findFirstWeekdayOfMonth(year, monthIndex, weekdayIndex) {
-  // Start at the first day of the month
   const date = new Date(year, monthIndex, 1);
 
-  // Move forward until weekday matches
   while (date.getDay() !== weekdayIndex) {
     date.setDate(date.getDate() + 1);
   }
@@ -77,10 +73,8 @@ export function findNthWeekdayOfMonth(
 }
 
 export function findLastWeekdayOfMonth(year, monthIndex, weekdayIndex) {
-  // Start at last day of the month
   const date = new Date(year, monthIndex + 1, 0);
 
-  // Move backwards until weekday matches
   while (date.getDay() !== weekdayIndex) {
     date.setDate(date.getDate() - 1);
   }

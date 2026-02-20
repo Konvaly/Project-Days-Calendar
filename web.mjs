@@ -4,7 +4,6 @@ import daysData from "./days.json" with { type: "json" };
 function createMonthDaysUi() {
   let currentDate = new Date();
 
-  // DOM
   const calendarGrid = document.getElementById("calendar-grid");
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
@@ -14,25 +13,18 @@ function createMonthDaysUi() {
   const descriptionPanel = document.getElementById("event-description");
 
   function buildEventsByDay(year, monthIndex) {
-    // Convert monthIndex (0-11) to the same month name format used in days.json, e.g. "October"
     const currentMonthName = new Date(year, monthIndex, 1).toLocaleDateString(
       "en-US",
       { month: "long" },
     );
 
-    // eventsByDay will look like: { 8: ["Ada Lovelace Day"], 25: ["World Lemur Day"] }
     const eventsByDay = {};
 
     for (const dayDef of daysData) {
-      // Only handle events that belong to the month we are currently rendering
       if (dayDef.monthName !== currentMonthName) continue;
-
-      // Use shared calculation engine to get the actual calendar date.
-      // It returns an ISO string ("YYYY-MM-DD"), so we can safely extract the day.
 
       const isoDate = calculateRecurringDay(year, dayDef);
 
-      // Extract the "DD" part and convert to a number (e.g. "08" -> 8)
       const dayOfMonth = Number(isoDate.slice(8, 10));
 
       if (!eventsByDay[dayOfMonth]) {
@@ -48,7 +40,6 @@ function createMonthDaysUi() {
     const currentMonth = date.getMonth();
     const currentYear = date.getFullYear();
 
-    // Populate months only once
     if (monthSelect.options.length === 0) {
       const monthNames = [
         "January",
@@ -73,7 +64,6 @@ function createMonthDaysUi() {
       });
     }
 
-    // Populate years only once
     if (yearSelect.options.length === 0) {
       for (let year = 1900; year <= 2100; year++) {
         const option = document.createElement("option");
@@ -83,12 +73,10 @@ function createMonthDaysUi() {
       }
     }
 
-    // Sync dropdown selection with calendar
     monthSelect.value = currentMonth;
     yearSelect.value = currentYear;
   }
 
-  // Initial render immediately
   renderCalendar(currentDate);
 
   function renderCalendar(date) {
@@ -123,7 +111,6 @@ function createMonthDaysUi() {
     const leadingEmptyCells = startingDay;
     const daysWithLeading = leadingEmptyCells + totalDays;
 
-    // Calculate trailing empty cells to complete the final week
     const trailingEmptyCells = (7 - (daysWithLeading % 7)) % 7;
 
     const totalCells = leadingEmptyCells + totalDays + trailingEmptyCells;
@@ -159,7 +146,6 @@ function createMonthDaysUi() {
     if (isEmpty) {
       cell.classList.add("empty");
     } else {
-      // Create container for day number
       const dayNumber = document.createElement("div");
       dayNumber.classList.add("day-number");
       dayNumber.textContent = content;
@@ -172,18 +158,12 @@ function createMonthDaysUi() {
         cell.title = eventNames.join(", ");
         cell.style.cursor = "pointer";
 
-        // cell.addEventListener("click", () => {
-        //   descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
-        // });
-        // Accessibility improvements
-
         const handleSelection = () => {
           descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
         };
 
         cell.addEventListener("click", handleSelection);
 
-        // Keyboard activation (Enter or Space)
         cell.addEventListener("keydown", (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -191,7 +171,6 @@ function createMonthDaysUi() {
           }
         });
 
-        // Create visible event label container
         const eventsContainer = document.createElement("div");
         eventsContainer.classList.add("day-events");
 
@@ -203,7 +182,6 @@ function createMonthDaysUi() {
 
         cell.appendChild(eventsContainer);
       } else if (!isEmpty) {
-        // If user clicks a normal day, reset description panel
         cell.addEventListener("click", () => {
           descriptionPanel.innerHTML =
             "<p>Select a commemorative day to see details.</p>";
@@ -218,7 +196,6 @@ function createMonthDaysUi() {
     calendarGrid.appendChild(cell);
   }
 
-  // Navigation
   prevBtn.addEventListener("click", () => {
     currentDate = new Date(
       currentDate.getFullYear(),
