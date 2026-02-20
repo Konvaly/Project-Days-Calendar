@@ -165,13 +165,30 @@ function createMonthDaysUi() {
       dayNumber.textContent = content;
       cell.appendChild(dayNumber);
 
+      cell.setAttribute("tabindex", "0");
+      cell.setAttribute("role", "button");
       if (eventNames.length > 0) {
         cell.classList.add("has-event");
         cell.title = eventNames.join(", ");
         cell.style.cursor = "pointer";
 
-        cell.addEventListener("click", () => {
+        // cell.addEventListener("click", () => {
+        //   descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
+        // });
+        // Accessibility improvements
+
+        const handleSelection = () => {
           descriptionPanel.innerHTML = `<p>${eventNames.join(", ")} selected.</p>`;
+        };
+
+        cell.addEventListener("click", handleSelection);
+
+        // Keyboard activation (Enter or Space)
+        cell.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleSelection();
+          }
         });
 
         // Create visible event label container
